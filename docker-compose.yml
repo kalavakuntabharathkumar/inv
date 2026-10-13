@@ -1,0 +1,37 @@
+services:
+  mongo:
+    image: mongo:7
+    ports: ["27017:27017"]
+    volumes: ["mongo_data:/data/db"]
+  catalog:
+    build: ./services/catalog
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB: retail
+      PORT: "8081"
+    depends_on: [mongo]
+  inventory:
+    build: ./services/inventory
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB: retail
+      PORT: "8082"
+    depends_on: [mongo]
+  orders:
+    build: ./services/orders
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB: retail
+      PORT: "8083"
+    depends_on: [mongo, inventory]
+  gateway:
+    build: ./services/gateway
+    environment:
+      CATALOG_URL: http://catalog:8081
+      INVENTORY_URL: http://inventory:8082
+      ORDERS_URL: http://orders:8083
+      PORT: "8080"
+    ports: ["8080:8080"]
+    depends_on: [catalog, inventory, orders]
+volumes:
+  mongo_data:

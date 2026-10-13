@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "Retail Microservices Demo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/health"
+      }
+    },
+    {
+      "name": "List products",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/products"
+      }
+    },
+    {
+      "name": "Create product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"sku\":\"sku-1\",\"name\":\"Notebook\",\"price\":12.5}"
+        },
+        "url": "http://localhost:8080/api/products"
+      }
+    },
+    {
+      "name": "Create order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"userId\":\"demo-user\",\"productId\":\"sku-1\",\"quantity\":2}"
+        },
+        "url": "http://localhost:8080/api/orders"
+      }
+    }
+  ]
+}
